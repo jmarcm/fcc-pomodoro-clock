@@ -34,7 +34,6 @@ function Session({ timer }) {
 
   return (
     <div className="session">
-      {timer}
       <div className="session-wrapper">
         <div id="timer-label">Session</div>
         <div id="time-left">{timeLeft}</div>
@@ -44,6 +43,7 @@ function Session({ timer }) {
 }
 
 function DisplayLengthSettings(props) {
+  const [value, setValue] = useState(props.timer);
   const settingName = props.settingName;
   const settingLengthWrapper = `${settingName.toLowerCase()}-length-wrapper`;
   const settingLabel = `${settingName.toLowerCase()}-label`;
@@ -55,13 +55,13 @@ function DisplayLengthSettings(props) {
     <div className={settingLengthWrapper}>
       <div id={settingLabel}>{settingName} Length</div>
       <div className="settings-wrapper">
-        <div id={settingDecrement}>
-          <i className="fas fa-arrow-up" />
-        </div>
-        <div id={settingLength}>{props.timer}</div>
-        <div id={settingIncrement}>
+        <button id={settingDecrement} onClick={() => setValue(value - 1)}>
           <i className="fas fa-arrow-down" />
-        </div>
+        </button>
+        <div id={settingLength}>{value}</div>
+        <button id={settingIncrement} onClick={() => setValue(value + 1)}>
+          <i className="fas fa-arrow-up" />
+        </button>
       </div>
     </div>
   );
@@ -75,8 +75,6 @@ function App() {
   const [breakLength, setBreakLength] = useState(defaultBreakLength);
 
   const [length, setLength] = useState(1500);
-
-  const timer = sessionLength * 60;
 
   return (
     <div className="App">

@@ -48,7 +48,7 @@ h1 {
 }
 
 .session-wrapper {
-  width: 310px;
+  width: 340px;
   margin: 0 auto;
   background: darkcyan;
   border: 7px solid red;
@@ -62,7 +62,7 @@ h1 {
 }
 
 #time-left {
-  padding-top: 0.05em;
+  padding: 0.15em 0;
   font-size: 7em;
 }
 
