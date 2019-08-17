@@ -1,0 +1,15 @@
+h1 {
+  background: green;
+}
+
+.timer-controls {
+  background: yellow;
+}
+
+.session {
+  background: orange;
+}
+
+.settings {
+  background: yellowgreen;
+}
