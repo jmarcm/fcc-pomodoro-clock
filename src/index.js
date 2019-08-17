@@ -8,6 +8,41 @@ import Signature from "./Signature";
 
 const projectName = "Pomodoro Clock";
 
+function Controls(props) {
+  return (
+    <div className="timer-controls">
+      <button id="start_stop">
+        <i className="fas fa-play fa-lg" />
+      </button>
+      <button id="reset">
+        <i className="fas fa-sync fa-lg" />
+      </button>
+    </div>
+  );
+}
+
+function Session({ timer }) {
+  function format() {
+    let minutes = Math.floor(timer / 60);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    let seconds = timer - minutes * 60;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    return minutes + ":" + seconds;
+  }
+
+  let timeLeft = format();
+
+  return (
+    <div className="session">
+      {timer}
+      <div className="session-wrapper">
+        <div id="timer-label">Session</div>
+        <div id="time-left">{timeLeft}</div>
+      </div>
+    </div>
+  );
+}
+
 function DisplayLengthSettings(props) {
   const settingName = props.settingName;
   const settingLengthWrapper = `${settingName.toLowerCase()}-length-wrapper`;
@@ -15,6 +50,7 @@ function DisplayLengthSettings(props) {
   const settingDecrement = `${settingName.toLowerCase()}-decrement`;
   const settingIncrement = `${settingName.toLowerCase()}-increment`;
   const settingLength = `${settingName.toLowerCase()}-length`;
+
   return (
     <div className={settingLengthWrapper}>
       <div id={settingLabel}>{settingName} Length</div>
@@ -22,7 +58,7 @@ function DisplayLengthSettings(props) {
         <div id={settingDecrement}>
           <i className="fas fa-arrow-up" />
         </div>
-        <div id={settingLength}>{props.children}</div>
+        <div id={settingLength}>{props.timer}</div>
         <div id={settingIncrement}>
           <i className="fas fa-arrow-down" />
         </div>
@@ -38,30 +74,18 @@ function App() {
   const [sessionLength, setSessionLength] = useState(defaultSessionLength);
   const [breakLength, setBreakLength] = useState(defaultBreakLength);
 
+  const [length, setLength] = useState(1500);
+
+  const timer = sessionLength * 60;
+
   return (
     <div className="App">
       <h1>{projectName}</h1>
-      <div className="timer-controls">
-        <button id="start_stop">
-          <i class="fas fa-play fa-lg" />
-        </button>
-        <button id="reset">
-          <i class="fas fa-sync fa-lg" />
-        </button>
-      </div>
-      <div className="session">
-        <div className="session-wrapper">
-          <div id="timer-label">Session</div>
-          <div id="time-left">25</div>
-        </div>
-      </div>
+      <Controls />
+      <Session timer={length} />
       <div className="settings">
-        <DisplayLengthSettings settingName="Session">
-          {sessionLength}
-        </DisplayLengthSettings>
-        <DisplayLengthSettings settingName="Break">
-          {breakLength}
-        </DisplayLengthSettings>
+        <DisplayLengthSettings settingName="Session" timer={sessionLength} />
+        <DisplayLengthSettings settingName="Break" timer={breakLength} />
       </div>
       <footer>
         <Signature />
