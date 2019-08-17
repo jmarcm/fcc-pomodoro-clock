@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
 import "./styles.css";
@@ -8,7 +8,36 @@ import Signature from "./Signature";
 
 const projectName = "Pomodoro Clock";
 
+function DisplayLengthSettings(props) {
+  const settingName = props.settingName;
+  const settingLengthWrapper = `${settingName.toLowerCase()}-length-wrapper`;
+  const settingLabel = `${settingName.toLowerCase()}-label`;
+  const settingDecrement = `${settingName.toLowerCase()}-decrement`;
+  const settingIncrement = `${settingName.toLowerCase()}-increment`;
+  const settingLength = `${settingName.toLowerCase()}-length`;
+  return (
+    <div className={settingLengthWrapper}>
+      <div id={settingLabel}>{settingName} Length</div>
+      <div className="settings-wrapper">
+        <div id={settingDecrement}>
+          <i className="fas fa-arrow-up" />
+        </div>
+        <div id={settingLength}>{props.children}</div>
+        <div id={settingIncrement}>
+          <i className="fas fa-arrow-down" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
+  const defaultSessionLength = 25;
+  const defaultBreakLength = 5;
+
+  const [sessionLength, setSessionLength] = useState(defaultSessionLength);
+  const [breakLength, setBreakLength] = useState(defaultBreakLength);
+
   return (
     <div className="App">
       <h1>{projectName}</h1>
@@ -27,30 +56,12 @@ function App() {
         </div>
       </div>
       <div className="settings">
-        <div className="session-length">
-          <div id="session-label">Session Length</div>
-          <div className="settings-wrapper">
-            <div id="session-decrement">
-              <i class="fas fa-arrow-up" />
-            </div>
-            <div id="session-length">25</div>
-            <div id="session-increment">
-              <i class="fas fa-arrow-down" />
-            </div>
-          </div>
-        </div>
-        <div className="break-length">
-          <div id="break-label">Break Length</div>
-          <div className="settings-wrapper">
-            <div id="break-decrement">
-              <i class="fas fa-arrow-up" />
-            </div>
-            <div id="break-length">5</div>
-            <div id="break-increment">
-              <i class="fas fa-arrow-down" />
-            </div>
-          </div>
-        </div>
+        <DisplayLengthSettings settingName="Session">
+          {sessionLength}
+        </DisplayLengthSettings>
+        <DisplayLengthSettings settingName="Break">
+          {breakLength}
+        </DisplayLengthSettings>
       </div>
       <footer>
         <Signature />
