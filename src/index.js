@@ -29,7 +29,7 @@ function Session({ timer }) {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     return minutes + ":" + seconds;
   }
-
+  sdfsdf;
   let timeLeft = format();
 
   return (
