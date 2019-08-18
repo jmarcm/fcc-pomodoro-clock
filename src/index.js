@@ -22,10 +22,13 @@ function Controls(props) {
 }
 
 function Session({ timer }) {
+  /*
   const [timeLeft, setTimeLeft] = useState(() => {
     console.log(timer);
     return timer + ":00";
   });
+  */
+
   function format(time) {
     let minutes = Math.floor(time / 60);
     minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -34,13 +37,13 @@ function Session({ timer }) {
     return minutes + ":" + seconds;
   }
 
-  //let timeLeft = format();
+  const timeLeft = format(timer);
 
   return (
     <div className="session">
       <div className="session-wrapper">
         <div id="timer-label">Session</div>
-        <div id="time-left">{timer}</div>
+        <div id="time-left">{timeLeft}</div>
       </div>
     </div>
   );
@@ -55,6 +58,8 @@ function DisplayLengthSettings(props) {
   const settingIncrement = `${settingName.toLowerCase()}-increment`;
   const settingLength = `${settingName.toLowerCase()}-length`;
 
+  const timer = props.timer / 60;
+
   return (
     <div className={settingLengthWrapper}>
       <div id={settingLabel}>{settingName} Length</div>
@@ -62,7 +67,7 @@ function DisplayLengthSettings(props) {
         <button id={settingDecrement} onClick={props.decrementSetting}>
           <i className="fas fa-arrow-down" />
         </button>
-        <div id={settingLength}>{props.timer}</div>
+        <div id={settingLength}>{timer}</div>
         <button id={settingIncrement} onClick={props.incrementSetting}>
           <i className="fas fa-arrow-up" />
         </button>
@@ -72,28 +77,28 @@ function DisplayLengthSettings(props) {
 }
 
 function App() {
-  const defaultSessionLength = 25;
-  const defaultBreakLength = 5;
+  const defaultSessionLength = 1500;
+  const defaultBreakLength = 300;
 
   const [sessionLength, setSessionLength] = useState(defaultSessionLength);
   const [breakLength, setBreakLength] = useState(defaultBreakLength);
 
-  //const [length, setLength] = useState(1500);
-
   function decrementSession() {
-    setSessionLength(sessionLength - 1);
+    const newSessionLength = sessionLength - 60 >= 0 ? sessionLength - 60 : 0;
+    setSessionLength(newSessionLength);
   }
 
   function incrementSession() {
-    setSessionLength(sessionLength + 1);
+    setSessionLength(sessionLength + 60);
   }
 
   function decrementBreak() {
-    setBreakLength(breakLength - 1);
+    const newBreakLength = breakLength - 60 >= 0 ? breakLength - 60 : 0;
+    setBreakLength(newBreakLength);
   }
 
   function incrementBreak() {
-    setBreakLength(breakLength + 1);
+    setBreakLength(breakLength + 60);
   }
 
   return (
